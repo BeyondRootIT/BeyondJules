@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import events from '../data/events.json';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+).slice(0, 3);
+---
+
+<Layout title="Cyber Sentinel | Security Professional">
+	<section class="py-20 border-b border-surface-highest">
+		<h1 class="text-display-lg text-primary font-display font-bold mb-6 tracking-tight">
+			SYSTEM.ONLINE
+		</h1>
+		<p class="text-xl text-on-surface-variant font-mono max-w-2xl mb-8 leading-relaxed">
+			> Init sequence complete.<br/>
+			> Connecting to node...<br/>
+			> Welcome to the terminal of a cybersecurity professional. Securing architectures, analyzing threats, and exploring the digital frontier.
+		</p>
+		<a href="/knowledge" class="inline-block border border-primary text-primary px-8 py-3 font-mono text-sm uppercase hover:bg-primary-dim hover:text-void transition-colors">
+			[ Access Knowledge Base ]
+		</a>
+	</section>
+
+	<div class="grid grid-cols-1 md:grid-cols-2 gap-12 py-16">
+		<section>
+			<h2 class="text-2xl font-display font-bold mb-8 text-on-surface border-l-4 border-primary pl-4">Recent Transmissions</h2>
+			<div class="space-y-6">
+				{posts.map((post) => (
+					<a href={`/blog/${post.slug}/`} class="block bg-surface-low p-6 border border-transparent hover:border-primary-dim/30 hover:bg-surface-high transition-all">
+						<div class="text-xs text-primary font-mono mb-2">
+							{post.data.pubDate.toLocaleDateString('en-us', {
+								year: 'numeric',
+								month: 'short',
+								day: 'numeric',
+							})}
+						</div>
+						<h3 class="text-xl font-bold font-display text-on-surface mb-2">{post.data.title}</h3>
+						<p class="text-on-surface-variant text-sm">{post.data.description}</p>
+					</a>
+				))}
+			</div>
+			<div class="mt-6">
+				<a href="/blog" class="text-primary font-mono text-sm hover:underline">> View All Logs</a>
+			</div>
+		</section>
+
+		<section>
+			<h2 class="text-2xl font-display font-bold mb-8 text-on-surface border-l-4 border-tertiary pl-4">Global Threat Feed</h2>
+			<div class="space-y-6">
+				{events.slice(0, 3).map((event) => (
+					<div class="bg-surface-low p-6 border-l border-tertiary/50 hover:border-tertiary transition-colors">
+						<div class="text-xs text-tertiary font-mono mb-2">{event.date}</div>
+						<h3 class="text-lg font-bold font-display text-on-surface mb-2">{event.title}</h3>
+						<p class="text-on-surface-variant text-sm mb-4 line-clamp-3">{event.summary}</p>
+					</div>
+				))}
+			</div>
+			<div class="mt-6">
+				<a href="/feed" class="text-tertiary font-mono text-sm hover:underline">> Access Full Feed</a>
+			</div>
+		</section>
+	</div>
+</Layout>

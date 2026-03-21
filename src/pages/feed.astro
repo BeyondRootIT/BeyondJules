@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import events from '../data/events.json';
+---
+
+<Layout title="Cybersecurity Event Feed | Cyber Sentinel">
+	<section class="py-12 border-b border-surface-highest mb-12">
+		<h1 class="text-4xl text-tertiary font-display font-bold mb-4">/usr/bin/feed</h1>
+		<p class="text-on-surface-variant font-mono text-sm uppercase tracking-wider">Aggregated Threat Intelligence</p>
+	</section>
+
+	<div class="relative border-l border-surface-highest pl-8 space-y-12 ml-4">
+		{events.map((event) => (
+			<article class="relative">
+				<!-- Timeline dot -->
+				<span class="absolute -left-[41px] top-1 w-4 h-4 rounded-none bg-surface-highest border-2 border-tertiary"></span>
+
+				<div class="text-tertiary font-mono text-sm mb-2">{event.date}</div>
+				<h2 class="text-2xl font-bold font-display text-on-surface mb-3">{event.title}</h2>
+
+				<div class="bg-surface-low p-6 border-l-2 border-tertiary/50">
+					<p class="text-on-surface-variant leading-relaxed mb-4">{event.summary}</p>
+
+					{event.sources && event.sources.length > 0 && (
+						<div class="mt-4 pt-4 border-t border-surface-highest">
+							<span class="text-xs text-on-surface-variant font-mono uppercase mr-2">Sources:</span>
+							<ul class="inline-flex space-x-4">
+								{event.sources.map((source) => (
+									<li>
+										<a href={source} target="_blank" rel="noopener noreferrer" class="text-tertiary text-xs hover:underline break-all">
+											[{new URL(source).hostname}]
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
+				</div>
+			</article>
+		))}
+	</div>
+</Layout>

@@ -1,0 +1,22 @@
+
+> app@0.0.1 dev
+> astro dev
+
+[vite] connected.
+20:42:56 [types] Generated 1ms
+[vite] connected.
+20:42:57 [content] Syncing content
+20:42:57 [content] Synced content
+20:42:57 [WARN] [vite] [plugin:astro:scripts] context method emitFile() is not supported in serve mode. This plugin is likely not vite-compatible.
+20:42:57 [vite] Re-optimizing dependencies because vite config has changed
+ astro  v6.0.8 ready in 6717 ms
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+20:42:57 watching for file changes...
+20:43:02 [200] / 188ms
+20:43:03 [vite] ✨ new dependencies optimized: astro/runtime/client/dev-toolbar/entrypoint.js
+20:43:03 [vite] ✨ optimized dependencies changed. reloading
+20:43:03 [200] / 6ms
+20:43:04 [200] /knowledge 46ms
+20:43:06 [200] /blog 25ms
+20:43:06 [200] /feed 17ms

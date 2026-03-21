@@ -1,0 +1,40 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={`${post.data.title} | Blog | Cyber Sentinel`}>
+	<article class="max-w-3xl mx-auto py-12">
+		<header class="mb-12 border-b border-surface-highest pb-8">
+			<div class="text-primary font-mono text-sm mb-4">
+				[ {post.data.pubDate.toLocaleDateString('en-us', {
+					year: 'numeric',
+					month: 'short',
+					day: 'numeric',
+				})} ]
+			</div>
+			<h1 class="text-4xl md:text-5xl font-display font-bold text-on-surface leading-tight mb-4">
+				{post.data.title}
+			</h1>
+			<p class="text-xl text-on-surface-variant leading-relaxed">
+				{post.data.description}
+			</p>
+		</header>
+
+		<div class="prose prose-invert prose-p:text-on-surface-variant prose-headings:text-on-surface prose-headings:font-display prose-a:text-primary hover:prose-a:text-primary-dim max-w-none">
+			<Content />
+		</div>
+	</article>
+</Layout>

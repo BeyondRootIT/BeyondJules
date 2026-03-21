@@ -1,0 +1,56 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import KnowledgeApp from '../../components/KnowledgeApp.jsx';
+import { getCollection } from 'astro:content';
+
+const knowledgeEntries = await getCollection('knowledge');
+
+// Prepare all entries with their raw markdown body
+const allEntries = knowledgeEntries.map((entry) => ({
+	slug: entry.slug,
+	data: entry.data,
+	body: entry.body,
+}));
+
+// Transform entries to pass to React component for the graph
+const nodes = knowledgeEntries.map((entry) => ({
+	id: entry.slug,
+	name: entry.data.title,
+	val: 1, // Node size
+}));
+
+// Basic link extraction
+const links: any[] = [];
+knowledgeEntries.forEach((entry) => {
+	const content = entry.body;
+	const linkRegex = /\[.*?\]\(\/knowledge\/(.*?)\)/g;
+	let match;
+	while ((match = linkRegex.exec(content)) !== null) {
+		const targetSlug = match[1];
+		if (nodes.find(n => n.id === targetSlug)) {
+			links.push({
+				source: entry.slug,
+				target: targetSlug,
+			});
+		}
+	}
+});
+
+const graphData = { nodes, links };
+---
+
+<Layout title="Knowledge Base | Cyber Sentinel">
+	<div class="h-[calc(100vh-120px)] flex flex-col">
+		<header class="mb-8 border-b border-surface-highest pb-4 flex justify-between items-center">
+			<div>
+				<h1 class="text-4xl text-primary font-display font-bold">/opt/knowledge</h1>
+				<p class="text-on-surface-variant font-mono text-sm uppercase tracking-wider">Zettelkasten Neural Network</p>
+			</div>
+			<div>
+				<input type="text" placeholder="Search knowledge..." class="bg-surface-lowest border-b border-outline text-on-surface p-2 focus:outline-none focus:border-primary font-mono text-sm w-64 transition-colors hidden md:block" />
+			</div>
+		</header>
+
+        <KnowledgeApp client:load graphData={graphData} allEntries={allEntries} />
+	</div>
+</Layout>

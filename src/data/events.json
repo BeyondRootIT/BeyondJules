@@ -1,0 +1,29 @@
+[
+  {
+    "id": "4f734da037006354800328bbc45e3ca9",
+    "title": "FBI Warns Russian Hackers Target Signal, WhatsApp in Mass Phishing Attacks",
+    "date": "Sat, 21 Mar 2026 18:47:00 +0530",
+    "summary": "Automated summary generation disabled or failed. FBI Warns Russian Hackers Target Signal, WhatsApp in Mass Phishing Attacks",
+    "sources": [
+      "https://thehackernews.com/2026/03/fbi-warns-russian-hackers-target-signal.html"
+    ]
+  },
+  {
+    "id": "d9d7ea69ee132b7f3803400214596ba0",
+    "title": "Oracle Patches Critical CVE-2026-21992 Enabling Unauthenticated RCE in Identity Manager",
+    "date": "Sat, 21 Mar 2026 15:54:00 +0530",
+    "summary": "Automated summary generation disabled or failed. Oracle Patches Critical CVE-2026-21992 Enabling Unauthenticated RCE in Identity Manager",
+    "sources": [
+      "https://thehackernews.com/2026/03/oracle-patches-critical-cve-2026-21992.html"
+    ]
+  },
+  {
+    "id": "6095af639faf64b516de6c7c13c6a295",
+    "title": "Trivy Supply Chain Attack Triggers Self-Spreading CanisterWorm Across 47 npm Packages",
+    "date": "Sat, 21 Mar 2026 13:55:00 +0530",
+    "summary": "Automated summary generation disabled or failed. Trivy Supply Chain Attack Triggers Self-Spreading CanisterWorm Across 47 npm Packages",
+    "sources": [
+      "https://thehackernews.com/2026/03/trivy-supply-chain-attack-triggers-self.html"
+    ]
+  }
+]

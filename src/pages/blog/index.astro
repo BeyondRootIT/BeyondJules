@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout title="Blog | Cyber Sentinel">
+	<section class="py-12 border-b border-surface-highest mb-12">
+		<h1 class="text-4xl text-primary font-display font-bold mb-4">/var/log/blog</h1>
+		<p class="text-on-surface-variant font-mono text-sm uppercase tracking-wider">Declassified Security Insights</p>
+	</section>
+
+	<div class="space-y-12">
+		{posts.map((post) => (
+			<article class="flex flex-col md:flex-row gap-8 items-baseline group">
+				<div class="md:w-1/4 text-primary font-mono text-sm opacity-80 group-hover:opacity-100 transition-opacity">
+					{post.data.pubDate.toLocaleDateString('en-us', {
+						year: 'numeric',
+						month: 'short',
+						day: 'numeric',
+					})}
+				</div>
+				<div class="md:w-3/4">
+					<a href={`/blog/${post.slug}/`}>
+						<h2 class="text-2xl font-bold font-display text-on-surface mb-3 group-hover:text-primary transition-colors">{post.data.title}</h2>
+					</a>
+					<p class="text-on-surface-variant leading-relaxed">{post.data.description}</p>
+				</div>
+			</article>
+		))}
+	</div>
+</Layout>
