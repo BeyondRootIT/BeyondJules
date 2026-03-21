@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import KnowledgeGraphWrapper from './KnowledgeGraphWrapper.jsx';
 import ReactMarkdown from 'react-markdown';
 
-export default function KnowledgeApp({ graphData, allEntries }) {
+export default function KnowledgeApp({ graphData, allEntries, baseUrl }) {
   const [activeNotes, setActiveNotes] = useState([]);
 
   // Handle graph click
@@ -29,9 +29,14 @@ export default function KnowledgeApp({ graphData, allEntries }) {
 
       if (target && target.tagName === 'A') {
           const href = target.getAttribute('href');
-          if (href && href.startsWith('/knowledge/')) {
+
+          // Check if link starts with /knowledge or baseUrl/knowledge
+          const knowledgePrefix = `${baseUrl}/knowledge`.replace(/\/\//g, '/');
+          const isKnowledgeLink = href && (href.startsWith('/knowledge/') || href.startsWith(knowledgePrefix + '/'));
+
+          if (isKnowledgeLink) {
               e.preventDefault();
-              const targetSlug = href.replace('/knowledge/', '').replace(/\/$/, '');
+              let targetSlug = href.replace('/knowledge/', '').replace(knowledgePrefix + '/', '').replace(/\/$/, '');
               const targetEntry = allEntries.find(entry => entry.slug === targetSlug);
 
               if (targetEntry) {

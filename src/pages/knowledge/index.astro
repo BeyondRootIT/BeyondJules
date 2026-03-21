@@ -4,6 +4,7 @@ import KnowledgeApp from '../../components/KnowledgeApp.jsx';
 import { getCollection } from 'astro:content';
 
 const knowledgeEntries = await getCollection('knowledge');
+const baseUrl = import.meta.env.BASE_URL;
 
 // Prepare all entries with their raw markdown body
 const allEntries = knowledgeEntries.map((entry) => ({
@@ -51,6 +52,6 @@ const graphData = { nodes, links };
 			</div>
 		</header>
 
-        <KnowledgeApp client:load graphData={graphData} allEntries={allEntries} />
+        <KnowledgeApp client:load graphData={graphData} allEntries={allEntries} baseUrl={baseUrl} />
 	</div>
 </Layout>

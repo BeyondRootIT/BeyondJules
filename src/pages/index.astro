@@ -6,6 +6,7 @@ import events from '../data/events.json';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 ).slice(0, 3);
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Cyber Sentinel | Security Professional">
@@ -18,7 +19,7 @@ const posts = (await getCollection('blog')).sort(
 			> Connecting to node...<br/>
 			> Welcome to the terminal of a cybersecurity professional. Securing architectures, analyzing threats, and exploring the digital frontier.
 		</p>
-		<a href="/knowledge" class="inline-block border border-primary text-primary px-8 py-3 font-mono text-sm uppercase hover:bg-primary-dim hover:text-void transition-colors">
+		<a href={`${baseUrl}/knowledge`.replace(/\/\//g, '/')} class="inline-block border border-primary text-primary px-8 py-3 font-mono text-sm uppercase hover:bg-primary-dim hover:text-void transition-colors">
 			[ Access Knowledge Base ]
 		</a>
 	</section>
@@ -28,7 +29,7 @@ const posts = (await getCollection('blog')).sort(
 			<h2 class="text-2xl font-display font-bold mb-8 text-on-surface border-l-4 border-primary pl-4">Recent Transmissions</h2>
 			<div class="space-y-6">
 				{posts.map((post) => (
-					<a href={`/blog/${post.slug}/`} class="block bg-surface-low p-6 border border-transparent hover:border-primary-dim/30 hover:bg-surface-high transition-all">
+					<a href={`${baseUrl}/blog/${post.slug}/`.replace(/\/\//g, '/')} class="block bg-surface-low p-6 border border-transparent hover:border-primary-dim/30 hover:bg-surface-high transition-all">
 						<div class="text-xs text-primary font-mono mb-2">
 							{post.data.pubDate.toLocaleDateString('en-us', {
 								year: 'numeric',
@@ -42,7 +43,7 @@ const posts = (await getCollection('blog')).sort(
 				))}
 			</div>
 			<div class="mt-6">
-				<a href="/blog" class="text-primary font-mono text-sm hover:underline">> View All Logs</a>
+				<a href={`${baseUrl}/blog`.replace(/\/\//g, '/')} class="text-primary font-mono text-sm hover:underline">> View All Logs</a>
 			</div>
 		</section>
 
@@ -58,7 +59,7 @@ const posts = (await getCollection('blog')).sort(
 				))}
 			</div>
 			<div class="mt-6">
-				<a href="/feed" class="text-tertiary font-mono text-sm hover:underline">> Access Full Feed</a>
+				<a href={`${baseUrl}/feed`.replace(/\/\//g, '/')} class="text-tertiary font-mono text-sm hover:underline">> Access Full Feed</a>
 			</div>
 		</section>
 	</div>
