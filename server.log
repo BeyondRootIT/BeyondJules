@@ -37,3 +37,23 @@ Error: Failed to load url astro:server-app.js (resolved id: astro:server-app.js)
 21:09:57 [WARN] [vite] [plugin:astro:scripts] context method emitFile() is not supported in serve mode. This plugin is likely not vite-compatible.
 21:09:57 [vite] Re-optimizing dependencies because vite config has changed
 [vite] connected.
+01:52:09 Configuration file updated. Restarting...
+[vite] connected.
+01:52:26 [WARN] [vite] [plugin:astro:scripts] context method emitFile() is not supported in serve mode. This plugin is likely not vite-compatible.
+01:52:26 [vite] Re-optimizing dependencies because vite config has changed
+01:52:28 [content] Syncing content
+01:52:28 [content] Synced content
+01:52:28 [types] Generated 2.00s
+01:52:28 [WARN] [vite] [plugin:astro:scripts] context method emitFile() is not supported in serve mode. This plugin is likely not vite-compatible.
+01:52:28 [vite] Re-optimizing dependencies because vite config has changed
+[vite] connected.
+01:52:55 Configuration file updated. Restarting...
+[vite] connected.
+01:53:00 [WARN] [vite] [plugin:astro:scripts] context method emitFile() is not supported in serve mode. This plugin is likely not vite-compatible.
+01:53:00 [vite] Re-optimizing dependencies because vite config has changed
+01:53:00 [content] Syncing content
+01:53:00 [content] Synced content
+01:53:00 [types] Generated 665ms
+01:53:00 [WARN] [vite] [plugin:astro:scripts] context method emitFile() is not supported in serve mode. This plugin is likely not vite-compatible.
+01:53:00 [vite] Re-optimizing dependencies because vite config has changed
+[vite] connected.

@@ -8,6 +8,9 @@ import react from '@astrojs/react';
 export default defineConfig({
   site: 'https://BeyondRootIT.github.io',
   base: '/BeyondJules',
+  build: {
+    assets: '_astro'
+  },
   vite: {
     plugins: [tailwindcss()]
   },
