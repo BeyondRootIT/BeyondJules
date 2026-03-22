@@ -8,6 +8,9 @@ on:
     # Run everyday at midnight to fetch new feed data
     - cron: '0 0 * * *'
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   pages: write

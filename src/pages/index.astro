@@ -29,7 +29,7 @@ const baseUrl = import.meta.env.BASE_URL;
 			<h2 class="text-2xl font-display font-bold mb-8 text-on-surface border-l-4 border-primary pl-4">Recent Transmissions</h2>
 			<div class="space-y-6">
 				{posts.map((post) => (
-					<a href={`${baseUrl}/blog/${post.slug}/`.replace(/\/\//g, '/')} class="block bg-surface-low p-6 border border-transparent hover:border-primary-dim/30 hover:bg-surface-high transition-all">
+					<a href={`${baseUrl}/blog/${post.id}/`.replace(/\/\//g, '/')} class="block bg-surface-low p-6 border border-transparent hover:border-primary-dim/30 hover:bg-surface-high transition-all">
 						<div class="text-xs text-primary font-mono mb-2">
 							{post.data.pubDate.toLocaleDateString('en-us', {
 								year: 'numeric',

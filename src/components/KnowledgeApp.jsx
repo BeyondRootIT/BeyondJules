@@ -8,11 +8,11 @@ export default function KnowledgeApp({ graphData, allEntries, baseUrl }) {
   // Handle graph click
   const handleNodeClick = (node) => {
     // If it's already the only node open, close it (toggle)
-    if (activeNotes.length === 1 && activeNotes[0].slug === node.id) {
+    if (activeNotes.length === 1 && activeNotes[0].id === node.id) {
         setActiveNotes([]);
         return;
     }
-    const entry = allEntries.find(e => e.slug === node.id);
+    const entry = allEntries.find(e => e.id === node.id);
     if (entry) {
         // Replace active notes with just this one as the root
         setActiveNotes([entry]);
@@ -36,14 +36,14 @@ export default function KnowledgeApp({ graphData, allEntries, baseUrl }) {
 
           if (isKnowledgeLink) {
               e.preventDefault();
-              let targetSlug = href.replace('/knowledge/', '').replace(knowledgePrefix + '/', '').replace(/\/$/, '');
-              const targetEntry = allEntries.find(entry => entry.slug === targetSlug);
+              let targetId = href.replace('/knowledge/', '').replace(knowledgePrefix + '/', '').replace(/\/$/, '');
+              const targetEntry = allEntries.find(entry => entry.id === targetId);
 
               if (targetEntry) {
                   // Stack the new note after the current note
                   const newActiveNotes = activeNotes.slice(0, currentNoteIndex + 1);
                   // Avoid duplicates right after each other
-                  if (!newActiveNotes.find(n => n.slug === targetSlug)) {
+                  if (!newActiveNotes.find(n => n.id === targetId)) {
                       setActiveNotes([...newActiveNotes, targetEntry]);
                   }
               }
@@ -58,7 +58,7 @@ export default function KnowledgeApp({ graphData, allEntries, baseUrl }) {
             <KnowledgeGraphWrapper
                 graphData={graphData}
                 onNodeClick={handleNodeClick}
-                activeNodeId={activeNotes.length > 0 ? activeNotes[0].slug : null}
+                activeNodeId={activeNotes.length > 0 ? activeNotes[0].id : null}
             />
             <div className="absolute bottom-4 right-4 text-xs font-mono text-on-surface-variant pointer-events-none">
                 [ Interactive Map ]
@@ -76,7 +76,7 @@ export default function KnowledgeApp({ graphData, allEntries, baseUrl }) {
             ) : (
                 activeNotes.map((note, index) => (
                     <div
-                        key={`${note.slug}-${index}`}
+                        key={`${note.id}-${index}`}
                         className="min-w-full md:min-w-[500px] h-full bg-surface-low border border-surface-highest p-8 relative flex flex-col shadow-2xl shrink-0 snap-center overflow-y-auto cursor-pointer"
                         onClick={(e) => handleLinkClick(e, index)}
                     >

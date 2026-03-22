@@ -8,14 +8,14 @@ const baseUrl = import.meta.env.BASE_URL;
 
 // Prepare all entries with their raw markdown body
 const allEntries = knowledgeEntries.map((entry) => ({
-	slug: entry.slug,
+	id: entry.id,
 	data: entry.data,
 	body: entry.body,
 }));
 
 // Transform entries to pass to React component for the graph
 const nodes = knowledgeEntries.map((entry) => ({
-	id: entry.slug,
+	id: entry.id,
 	name: entry.data.title,
 	val: 1, // Node size
 }));
@@ -24,15 +24,17 @@ const nodes = knowledgeEntries.map((entry) => ({
 const links: any[] = [];
 knowledgeEntries.forEach((entry) => {
 	const content = entry.body;
-	const linkRegex = /\[.*?\]\(\/knowledge\/(.*?)\)/g;
-	let match;
-	while ((match = linkRegex.exec(content)) !== null) {
-		const targetSlug = match[1];
-		if (nodes.find(n => n.id === targetSlug)) {
-			links.push({
-				source: entry.slug,
-				target: targetSlug,
-			});
+	if (content) {
+		const linkRegex = /\[.*?\]\(\/knowledge\/(.*?)\)/g;
+		let match;
+		while ((match = linkRegex.exec(content)) !== null) {
+			const targetId = match[1];
+			if (nodes.find(n => n.id === targetId)) {
+				links.push({
+					source: entry.id,
+					target: targetId,
+				});
+			}
 		}
 	}
 });

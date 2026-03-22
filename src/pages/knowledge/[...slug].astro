@@ -1,23 +1,24 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
+import { render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import KnowledgeGraph from '../../components/KnowledgeGraph.jsx';
+import KnowledgeGraphWrapper from '../../components/KnowledgeGraphWrapper.jsx';
 
 export async function getStaticPaths() {
 	const entries = await getCollection('knowledge');
 	return entries.map((entry) => ({
-		params: { slug: entry.slug },
+		params: { slug: entry.id },
 		props: entry,
 	}));
 }
 type Props = CollectionEntry<'knowledge'>;
 
 const currentEntry = Astro.props;
-const { Content } = await currentEntry.render();
+const { Content } = await render(currentEntry);
 
 const knowledgeEntries = await getCollection('knowledge');
 const nodes = knowledgeEntries.map((entry) => ({
-	id: entry.slug,
+	id: entry.id,
 	name: entry.data.title,
 	val: 1, // Node size
 }));
@@ -26,15 +27,17 @@ const nodes = knowledgeEntries.map((entry) => ({
 const links: any[] = [];
 knowledgeEntries.forEach((entry) => {
 	const content = entry.body;
-	const linkRegex = /\[.*?\]\(\/knowledge\/(.*?)\)/g;
-	let match;
-	while ((match = linkRegex.exec(content)) !== null) {
-		const targetSlug = match[1];
-		if (nodes.find(n => n.id === targetSlug)) {
-			links.push({
-				source: entry.slug,
-				target: targetSlug,
-			});
+	if (content) {
+		const linkRegex = /\[.*?\]\(\/knowledge\/(.*?)\)/g;
+		let match;
+		while ((match = linkRegex.exec(content)) !== null) {
+			const targetSlug = match[1];
+			if (nodes.find(n => n.id === targetSlug)) {
+				links.push({
+					source: entry.id,
+					target: targetSlug,
+				});
+			}
 		}
 	}
 });
@@ -50,34 +53,34 @@ const graphData = { nodes, links };
 				<p class="text-on-surface-variant font-mono text-sm uppercase tracking-wider">Zettelkasten Neural Network</p>
 			</div>
 			<div>
-				<input type="text" placeholder="Search knowledge..." class="bg-surface-lowest border-b border-outline text-on-surface p-2 focus:outline-none focus:border-primary font-mono text-sm w-64 transition-colors" />
+				<input type="text" placeholder="Search knowledge..." class="bg-surface-lowest border-b border-outline text-on-surface p-2 focus:outline-none focus:border-primary font-mono text-sm w-64 transition-colors hidden md:block" />
 			</div>
 		</header>
 
 		<div class="flex-grow flex gap-4 overflow-hidden relative">
 			<!-- Graph View -->
-			<div class="w-1/3 bg-surface-low border border-surface-highest overflow-hidden rounded-sm relative hidden md:block">
-				<KnowledgeGraph client:only="react" graphData={graphData} />
-				<div class="absolute bottom-4 right-4 text-xs font-mono text-on-surface-variant">
+			<div class="w-1/3 bg-surface-low border border-surface-highest overflow-hidden rounded-sm relative hidden md:block shrink-0">
+				<KnowledgeGraphWrapper client:only="react" graphData={graphData} activeNodeId={currentEntry.id} />
+				<div class="absolute bottom-4 right-4 text-xs font-mono text-on-surface-variant pointer-events-none">
 					[ Interactive Map ]
 				</div>
 			</div>
 
 			<!-- Note Timeline View -->
 			<div class="w-full md:w-2/3 overflow-x-auto flex space-x-4 p-4 bg-surface-lowest items-start scrollbar-hide">
-				<div class="min-w-full md:min-w-[500px] h-full bg-surface-low border border-surface-highest p-8 relative flex flex-col shadow-2xl">
-					<div class="flex justify-between items-center mb-6">
-						<h2 class="text-3xl font-display font-bold text-on-surface">{currentEntry.data.title}</h2>
+				<div class="min-w-full md:min-w-[500px] h-full bg-surface-low border border-surface-highest p-8 relative flex flex-col shadow-2xl shrink-0">
+					<div class="flex justify-between items-start mb-6 shrink-0">
+						<h2 class="text-3xl font-display font-bold text-on-surface pr-4 leading-tight">{currentEntry.data.title}</h2>
 						{currentEntry.data.tags && (
-							<div class="flex space-x-2">
+							<div class="flex flex-wrap gap-2 justify-end">
 								{currentEntry.data.tags.map((tag) => (
-									<span class="text-xs bg-surface-highest text-on-surface-variant font-mono px-2 py-1 uppercase">{tag}</span>
+									<span class="text-[10px] bg-surface-highest text-on-surface-variant font-mono px-2 py-1 uppercase whitespace-nowrap border border-outline-variant">{tag}</span>
 								))}
 							</div>
 						)}
 					</div>
 
-					<div class="prose prose-invert prose-p:text-on-surface-variant prose-headings:text-on-surface prose-headings:font-display prose-a:text-tertiary hover:prose-a:text-primary transition-colors flex-grow overflow-y-auto pr-4">
+					<div class="prose prose-invert prose-p:text-on-surface-variant prose-headings:text-on-surface prose-headings:font-display prose-a:text-tertiary hover:prose-a:text-primary transition-colors flex-grow overflow-y-auto pr-4 max-w-none">
 						<Content />
 					</div>
 
