@@ -59,3 +59,32 @@ If you encounter an `HttpError: Not Found` or `Failed to create deployment (stat
 4. Under the "Build and deployment" section, find the **Source** dropdown menu.
 5. Change the source from "Deploy from a branch" to **"GitHub Actions"**.
 6. Once this is set, re-run your failed workflow or push a new commit, and the deployment will succeed.
+
+### Fixing "Branch 'main' is not allowed to deploy to github-pages" Error
+
+If your GitHub Actions workflow fails with the error `Branch "main" is not allowed to deploy to github-pages due to environment protection rules`, you need to update the Environment settings in your GitHub repository:
+
+1. Navigate to your repository on GitHub.
+2. Click on the **Settings** tab.
+3. In the left sidebar, click on **Environments**.
+4. Click on the **github-pages** environment.
+5. Look for the **Deployment branches** section.
+6. Under the dropdown menu for Deployment branches, change it from "Selected branches" to **"All branches"** (or keep "Selected branches" and add a rule allowing your `main` branch to deploy).
+7. Save the changes.
+8. Re-run your failed GitHub Actions workflow.
+
+---
+
+**CRITICAL DEPLOYMENT FIX:**
+
+If you see this error:
+`Branch "main" is not allowed to deploy to github-pages due to environment protection rules.`
+
+1. Go to your repository **Settings**.
+2. On the left sidebar, click **Environments**.
+3. Click on the `github-pages` environment name.
+4. Look under the **"Deployment branches and tags"** section.
+5. If the dropdown says "Selected branches", either:
+   - Change it to **"All branches"** OR
+   - Click "Add deployment branch rule" and add `main` (or `master`, whichever is your default branch).
+6. Save and re-run your GitHub Actions workflow.
